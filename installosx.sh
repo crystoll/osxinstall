@@ -26,7 +26,7 @@ brew install Caskroom/cask/adpassmon
 
     
 brew install coreutils z ack git wget findutils
-brew install jenv nvm ansible brew-gem scala sbt
+brew install ruby jenv nvm ansible brew-gem scala sbt
 brew install readline postgres maven gradle mongodb cmake mariadb 
 brew install gource ffmpeg ec2-api-tools
 
