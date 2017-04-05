@@ -28,7 +28,7 @@ brew install Caskroom/cask/adpassmon
 brew install coreutils z ack git wget findutils
 brew install rbenv jenv nvm ansible brew-gem scala sbt
 brew install readline postgres maven gradle mongodb cmake mariadb 
-brew install gource ffmpeg ec2-api-tools
+brew install gource ffmpeg ec2-api-tools openconnect
 
 # Optional stuff, not needed now or already installed
 #brew cask install google-chrome 
