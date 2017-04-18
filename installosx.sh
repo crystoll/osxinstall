@@ -22,6 +22,7 @@ brew cask install the-unarchiver
 brew cask install caskroom/fonts/font-hack
 brew cask install obs
 brew cask install cathode
+brew cask install dbvisualizer
 brew install Caskroom/cask/adpassmon
 
     
