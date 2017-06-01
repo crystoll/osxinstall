@@ -23,6 +23,7 @@ brew cask install caskroom/fonts/font-hack
 brew cask install obs
 brew cask install cathode
 brew cask install dbvisualizer
+brew cask install squirrelsql
 brew install Caskroom/cask/adpassmon
 
     
@@ -30,15 +31,13 @@ brew install coreutils z ack git wget findutils
 brew install rbenv jenv nvm ansible brew-gem scala sbt
 brew install readline postgres maven gradle mongodb cmake mariadb 
 brew install gource ffmpeg ec2-api-tools openconnect
+brew install terraform
 
 # Optional stuff, not needed now or already installed
 #brew cask install google-chrome 
 #brew cask install firefox 
 #brew cask install hipchat
 #brew cask install citrix-receiver 
-
-#This currently fails
-#brew cask install balsamiq-mockups 
 
 #Enable showing of hidden folders
 defaults write com.apple.finder AppleShowAllFiles YES
