@@ -24,6 +24,7 @@ brew cask install obs
 brew cask install cathode
 brew cask install dbvisualizer
 brew cask install squirrelsql
+brew cask install keepassx
 brew install Caskroom/cask/adpassmon
 brew tap pivotal/tap
 brew install springboot
