@@ -24,7 +24,6 @@ brew cask install obs
 brew cask install cathode
 brew cask install dbvisualizer
 brew cask install squirrelsql
-brew cask install keepassx
 brew install Caskroom/cask/adpassmon
 brew tap pivotal/tap
 brew install springboot
@@ -33,13 +32,17 @@ brew install coreutils z ack git wget findutils
 brew install rbenv jenv nvm ansible brew-gem scala sbt
 brew install readline postgres maven gradle mongodb cmake mariadb 
 brew install gource ffmpeg ec2-api-tools openconnect
-brew install terraform
+
+
+# Would be nice to install, but website is a bit shaky
+#brew cask install keepassx
 
 # Optional stuff, not needed now or already installed
 #brew cask install google-chrome 
 #brew cask install firefox 
 #brew cask install hipchat
 #brew cask install citrix-receiver 
+#brew install terraform
 
 #Enable showing of hidden folders
 defaults write com.apple.finder AppleShowAllFiles YES
