@@ -1,36 +1,30 @@
 #!/bin/sh
 
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-brew install caskroom/cask/brew-cask && brew tap caskroom/versions && brew update
+#brew install caskroom/cask/brew-cask && 
+brew tap caskroom/versions && brew update
 
-brew cask install dropbox
 brew cask install docker
 brew cask install java 
-brew cask install google-drive
-brew cask install iterm2 
 brew cask install caffeine 
 brew cask install sequel-pro 
 brew cask install virtualbox 
 brew cask install vagrant 
 brew cask install disk-inventory-x 
 brew cask install sourcetree
-brew cask install sublime-text
-brew cask install slack
 brew cask install intellij-idea 
 brew cask install poedit 
 brew cask install the-unarchiver
 brew cask install caskroom/fonts/font-hack
 brew cask install obs
 brew cask install cathode
-brew cask install dbvisualizer
 brew cask install squirrelsql
-brew install Caskroom/cask/adpassmon
 brew tap pivotal/tap
 brew install springboot
     
 brew install coreutils z ack git wget findutils
 brew install rbenv jenv nvm ansible brew-gem scala sbt
-brew install readline postgres maven gradle mongodb cmake mariadb 
+brew install postgres maven gradle mongodb cmake mariadb 
 brew install gource ffmpeg ec2-api-tools openconnect
 
 
@@ -38,6 +32,14 @@ brew install gource ffmpeg ec2-api-tools openconnect
 #brew cask install keepassx
 
 # Optional stuff, not needed now or already installed
+#brew install readline
+#brew install Caskroom/cask/adpassmon
+#brew cask install dbvisualizer
+#brew cask install slack
+#brew cask install sublime-text
+#brew cask install google-drive
+#brew cask install iterm2 
+#brew cask install dropbox
 #brew cask install google-chrome 
 #brew cask install firefox 
 #brew cask install hipchat
