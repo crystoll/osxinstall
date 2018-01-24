@@ -5,6 +5,7 @@
 brew tap caskroom/versions && brew update
 
 brew cask install docker
+brew cask install java8
 brew cask install java 
 brew cask install caffeine 
 brew cask install sequel-pro 
@@ -25,7 +26,7 @@ brew install springboot
 brew install coreutils z ack git wget findutils
 brew install rbenv jenv nvm ansible brew-gem scala sbt
 brew install postgres maven gradle mongodb cmake mariadb 
-brew install gource ffmpeg ec2-api-tools openconnect
+brew install gource ffmpeg ec2-api-tools openconnect thefuck
 
 
 # Would be nice to install, but website is a bit shaky
@@ -52,3 +53,6 @@ killall Finder
 
 #Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+#Link sublime to command line sublime call
+ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime
