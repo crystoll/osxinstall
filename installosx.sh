@@ -27,6 +27,7 @@ brew install coreutils z ack git wget findutils
 brew install rbenv jenv nvm ansible brew-gem scala sbt
 brew install postgres maven gradle mongodb cmake mariadb 
 brew install gource ffmpeg ec2-api-tools openconnect thefuck
+brew install awscli
 
 
 # Would be nice to install, but website is a bit shaky
