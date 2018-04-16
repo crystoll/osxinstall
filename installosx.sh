@@ -29,7 +29,10 @@ brew install postgres maven gradle mongodb cmake mariadb
 brew install gource ffmpeg ec2-api-tools openconnect thefuck
 brew install awscli azure-cli ctop
 
-
+# Python goodness, to use specific python, run: 
+# pyenv local 3.5.0 to create .python-version file for folder
+# Or just use: python3.5 or python2.7
+brew install pyenv && pyenv install 3.5.0 && pyenv install 2.7.10
 
 # Would be nice to install, but website is a bit shaky
 #brew cask install keepassx
