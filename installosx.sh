@@ -27,7 +27,7 @@ brew install coreutils z ack git wget findutils
 brew install rbenv jenv nvm ansible brew-gem scala sbt
 brew install postgres maven gradle mongodb cmake mariadb 
 brew install gource ffmpeg ec2-api-tools openconnect thefuck
-brew install awscli azure-cli ctop
+brew install awscli azure-cli ctop jq
 
 # Python goodness, to use specific python, run: 
 # pyenv local 3.5.0 to create .python-version file for folder
