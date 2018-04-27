@@ -20,6 +20,7 @@ brew cask install caskroom/fonts/font-hack
 brew cask install obs
 brew cask install cathode
 brew cask install squirrelsql
+brew cask install keepassxc
 brew tap pivotal/tap
 brew install springboot
     
