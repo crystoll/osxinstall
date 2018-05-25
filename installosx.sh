@@ -13,18 +13,27 @@ brew cask install virtualbox
 brew cask install vagrant 
 brew cask install disk-inventory-x 
 brew cask install sourcetree
-brew cask install intellij-idea 
+
+# po translation files editor
 brew cask install poedit 
 brew cask install the-unarchiver
+# Teh Best Font
 brew cask install caskroom/fonts/font-hack
+# Excellent screen recording tool
 brew cask install obs
+# Cool terminal app
 brew cask install cathode
+# sql client
 brew cask install squirrelsql
+# password manager
 brew cask install keepassxc
+# osx screen resolution hack
 brew cask install avibrazil-rdm
+# excellent code editors
+brew cask install intellij-idea 
+brew cask install visual-studio-code
 brew tap pivotal/tap
-brew install springboot
-    
+
 brew install coreutils z ack git wget findutils
 brew install rbenv jenv nvm ansible brew-gem scala sbt
 brew install postgres maven gradle mongodb cmake mariadb 
