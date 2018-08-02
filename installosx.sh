@@ -32,6 +32,10 @@ brew cask install avibrazil-rdm
 # excellent code editors
 brew cask install intellij-idea 
 brew cask install visual-studio-code
+
+# Owasp Zed attack proxy for security testing
+brew cask install owasp-zap
+
 brew tap pivotal/tap
 
 brew install coreutils z ack git wget findutils
