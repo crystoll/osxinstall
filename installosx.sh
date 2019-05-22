@@ -1,70 +1,62 @@
 #!/bin/sh
 
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-#brew install caskroom/cask/brew-cask && 
+
+# Fix error: zipimport.ZipImportError: can't decompress data; zlib not available
+xcode-select --install
+sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
+
+
+
+
 brew tap caskroom/versions && brew update
 
-brew cask install docker
-brew cask install java8
-brew cask install java 
-brew cask install caffeine 
-brew cask install sequel-pro 
-brew cask install virtualbox 
-brew cask install vagrant 
-brew cask install disk-inventory-x 
-brew cask install sourcetree
+brew cask install sublime-text
 
-# po translation files editor
-brew cask install poedit 
-brew cask install the-unarchiver
+brew cask install google-drive-file-stream
+
+brew cask install docker
+
+brew cask install java 
+
 # Teh Best Font
 brew cask install caskroom/fonts/font-hack
+
 # Excellent screen recording tool
 brew cask install obs
-# Cool terminal app
-brew cask install cathode
+
 # sql client
 brew cask install squirrelsql
-# password manager
-brew cask install keepassxc
-# osx screen resolution hack
-brew cask install avibrazil-rdm
+
 # excellent code editors
 brew cask install intellij-idea 
 brew cask install visual-studio-code
 
-# Owasp Zed attack proxy for security testing
-brew cask install owasp-zap
+# Cool terminal apps
+brew cask install iterm2 cathode
+brew cask install dropbox
+brew cask install google-chrome firefox
 
-brew tap pivotal/tap
+# Incredible productivity tool
+brew cask install spotify
 
-brew install coreutils z ack git wget findutils
-brew install rbenv jenv nvm ansible brew-gem scala sbt
-brew install postgres maven gradle mongodb cmake mariadb 
-brew install gource ffmpeg ec2-api-tools openconnect thefuck
-brew install awscli azure-cli ctop jq
 
-# Python goodness, to use specific python, run: 
+brew install terraform awscli azure-cli
+brew install jq git wget findutils coreutils
+brew install rbenv jenv nvm 
+brew install ansible brew-gem
+brew install maven gradle 
+brew install gource ffmpeg thefuck
+
+
+# Python versions via pyenv
+# To use specific python, run: 
 # pyenv local 3.5.0 to create .python-version file for folder
-brew install pyenv && pyenv install 3.6.5 && pyenv install 2.7.14
 
-# Would be nice to install, but website is a bit shaky
-#brew cask install keepassx
+brew install pyenv
+pyenv install 3.7.3
 
-# Optional stuff, not needed now or already installed
-#brew install readline
-#brew install Caskroom/cask/adpassmon
-#brew cask install dbvisualizer
-#brew cask install slack
-#brew cask install sublime-text
-#brew cask install google-drive
-#brew cask install iterm2 
-#brew cask install dropbox
-#brew cask install google-chrome 
-#brew cask install firefox 
-#brew cask install hipchat
-#brew cask install citrix-receiver 
-#brew install terraform
+# Or CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install -v 3.7.0
 
 #Enable showing of hidden folders
 defaults write com.apple.finder AppleShowAllFiles YES
@@ -75,3 +67,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 
 #Link sublime to command line sublime call
 ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime
+
+
+
