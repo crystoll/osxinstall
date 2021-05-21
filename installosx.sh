@@ -38,6 +38,21 @@ killall Finder
 #Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
+#install python stuff
+brew install pyenv
+echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+source ~/.zshrc
+pyenv install 3.9.4
+pyenv global 3.9.4
 
+#install node stuff
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 
+#install java stuff
+curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk install java 16.0.1.hs-adpt
+
+#install terraform stuff
+brew install warrensbox/tap/tfswitch
 
