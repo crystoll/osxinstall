@@ -58,6 +58,13 @@ sdk install java 21.0.4-tem
 #install terraform stuff
 brew install warrensbox/tap/tfswitch
 
+# dbeaver
+brew install dbeaver-community
+
+# aws cli
+brew install awscli
+brew install --cask session-manager-plugin
+
 
 ## Optionals
 # brew install --cask intellij-idea
