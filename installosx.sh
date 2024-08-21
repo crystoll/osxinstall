@@ -61,10 +61,14 @@ brew install warrensbox/tap/tfswitch
 # dbeaver
 brew install dbeaver-community
 
-# aws cli
+# aws cli and session manager plugin
 brew install awscli
 brew install --cask session-manager-plugin
+aws configure set cli_pager ""
 
+# Setup default identity for git - can also setup --local
+#git config --global user.name "<myname>"
+#git config --global user.email "<myemail>"
 
 ## Optionals
 # brew install --cask intellij-idea
