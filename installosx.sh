@@ -35,7 +35,7 @@ killall Finder
 brew install golang
 
 # Containers, using colima to host
-brew install colima docker
+brew install colima docker docker-credential-helper
 brew services start colima
 
 
