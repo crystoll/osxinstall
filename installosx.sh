@@ -31,6 +31,9 @@ brew install --cask spotify
 defaults write com.apple.finder AppleShowAllFiles YES
 killall Finder
 
+# Golang
+brew install golang
+
 # Containers, using colima to host
 brew install colima docker
 brew services start colima
@@ -38,6 +41,9 @@ brew services start colima
 
 #Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+# Add that brewski line in rc
+echo "alias brewski='brew update && brew upgrade && brew cleanup; brew doctor'" >> .zshrc
 
 #install python stuff
 brew install pyenv
