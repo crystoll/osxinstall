@@ -82,19 +82,50 @@ nvm `.nvmrc` hook, but for all runtimes at once.
 - **pyenv virtualenvs** — not migrated automatically; recreate with `uv venv`
   or `python -m venv` inside the project instead
 
-## Security notes
+## Security
 
-Three CVEs disclosed and fixed in early 2026, all in edge cases:
-- Malicious `.mise.toml` in an untrusted foreign repo executing commands on `cd`
-- HTTP backend path traversal on symlink creation
-- Tera template injection via `.tool-versions`
+mise has had 9 security advisories in 2026 alone, including one Critical.
+This is the most important thing to know before adopting it.
 
-All require you to `cd` into a repo you don't own with a crafted config.
-Mitigated by `mise trust` — mise now prompts before executing untrusted configs.
-For personal machine use with your own repos: low real-world risk.
+| Severity | Issue | Date |
+|---|---|---|
+| **Critical** | Arbitrary code execution via Tera templates in `.tool-versions` (trust bypass) | Jun 2026 |
+| **High** | Implicit project trust enables code execution via `history.describe_command` | Sep 2026 |
+| **High** | `shell_args` settings bypass trust denylist → arbitrary code execution | Jul 2026 |
+| **High** | Arbitrary code execution via task-include files in untrusted repos | Jun 2026 |
+| **High** | Local settings bypass config trust checks | Apr 2026 |
+| Moderate | GitLab/Forgejo tokens exposed on third-party hosts | Aug 2026 |
+| Moderate | HTTP backend path traversal on symlink creation | Jun 2026 |
+| Moderate | `credential_command` executes untrusted config | Jun 2026 |
+| Moderate | Incorrect file ownership when installed as root | Jul 2026 |
 
-If concerned: `mise settings set paranoid true` requires explicit trust for every
-non-global config before it executes anything.
+**The pattern matters more than the count.** These aren't about installing malicious
+packages — they're about `cd`-ing into a directory with a crafted config file
+triggering arbitrary code execution. The trust bypass has appeared 4 times at
+High or Critical across 2026 — the same architectural problem recurring after
+each fix. The maintainer is responsive and fixes are fast, but the class of
+vulnerability keeps coming back.
+
+**The Sep 2026 High is 8 days old at time of writing.** It's broader than the
+others: implicit trust via `history.describe_command` means past interaction
+with a directory could trigger execution without a `.mise.toml` present at all.
+
+**Practical risk for your use case:**
+- If you only `cd` into repos you own: low. You won't have crafted configs.
+- If you `cd` into client codebases, shared repos, or clone things to inspect:
+  higher. Exactly the scenario a consultant faces regularly.
+
+**Mitigation if you do adopt it:**
+```sh
+mise settings set paranoid true
+```
+Paranoid mode requires explicit `mise trust` for every non-global config before
+anything executes. Adds one manual step per new repo, eliminates the auto-execute
+surface.
+
+**Recommendation:** hold off until the trust architecture stabilises. Revisit
+in 3-6 months. The Sep 2026 Critical being this fresh is reason to wait.
+Compare: uv has zero code-execution CVEs from normal use.
 
 ## What it does NOT replace
 
@@ -148,12 +179,29 @@ In practice: if you already have turbo/pnpm for task running in your projects,
 there's no reason to add `[tasks]` to `.mise.toml`. Just leave that section out.
 
 
-## If you want to try it
+## If you want to try it (revisit in ~Q1 2027)
+
+Given the Sep 2026 High CVE being 8 days old, the recommendation is to wait
+for the trust architecture to stabilise before adopting mise on a work machine.
+Revisit around Q1 2027 and check whether the High/Critical class of vulnerability
+has recurred.
+
+When you do try it:
 
 1. `brew install mise`
-2. Replace the nvm + pyenv blocks in `~/.zshrc` with `eval "$(mise activate zsh)"`
-3. Run `mise use --global node@lts python@3.13`
-4. Test in one project: `cd myproject && mise install`
+2. Test without touching zshrc — `mise exec` works standalone:
+   ```sh
+   mise exec node@22 -- node --version
+   mise exec python@3.13 -- python --version
+   ```
+3. Enable paranoid mode before activating in your shell:
+   ```sh
+   mise settings set paranoid true
+   ```
+4. Replace the nvm + pyenv blocks in `~/.zshrc`:
+   ```sh
+   eval "$(mise activate zsh --no-env)"   # --no-env if keeping direnv
+   ```
 5. Run `mise doctor` if anything looks off
 
 Reversible: nvm and pyenv stay installed until you explicitly remove them.

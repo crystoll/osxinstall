@@ -172,9 +172,35 @@ uv python install 3.13   # or whatever current version
 And in `zshrc.template`, the pyenv block (~6 lines) drops to nothing —
 uv needs no shell activation hook.
 
+## Security
+
+uv has 6 advisories, all disclosed and fixed. All are triggered by installing
+a malicious package — not by normal use.
+
+| Severity | Issue | Date |
+|---|---|---|
+| Moderate | Arbitrary file write via entry point names | May 2026 |
+| Low | Arbitrary file deletion via RECORD entries | Apr 2026 |
+| Moderate | ZIP payload obfuscation via parsing differentials | Oct 2025 |
+| Low | Tar extraction differential with PAX headers | Oct 2025 |
+| Low | Path traversal in tar extraction | Sep 2025 |
+| Moderate | ZIP payload obfuscation | Aug 2025 |
+
+The pattern: all require you to install a malicious package from PyPI. This is
+the same risk vector as pip, npm, or any other package manager — if the package
+is malicious, bad things can happen. Not a uv-specific attack surface.
+
+No arbitrary code execution from normal use. No trust-bypass class of vulnerability.
+The record is clean for a tool of this size (90k stars, extremely active).
+
+**Compared to mise:** uv's CVE profile is significantly better. mise has a
+recurring High/Critical class of vulnerability around config trust bypass that
+can be triggered just by `cd`-ing into a directory. uv has no equivalent.
+
 ## Bottom line
 
 uv is already installed. Using it for Python version management costs you nothing
 new to learn — the commands are obvious (`uv python install`, `uv python list`).
 The pyenv block in your zshrc is the only friction point, and it's optional to
-remove. Lowest-effort improvement in the whole benchmark.
+remove. Lowest-effort improvement in the whole benchmark with the cleanest
+security record of any tool evaluated here.
