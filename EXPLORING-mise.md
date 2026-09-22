@@ -102,6 +102,52 @@ non-global config before it executes anything.
 - `brew` — still needed for GUI apps, CLI tools, containers etc.
 - `colima`, `docker`, `awscli` and everything else in `installosx.sh`
 
+## Using only the runtime manager part
+
+mise is designed to be used in parts. You can use it purely as a runtime switcher
+and ignore everything else — the env management and task runner are opt-in features
+that only activate if you use them. Nothing turns on by default.
+
+A minimal `.mise.toml` that only manages runtimes:
+
+```toml
+[tools]
+node = "22"
+python = "3.12"
+```
+
+No `[env]` section = mise never touches environment variables.
+No `[tasks]` section = mise task runner doesn't exist for this project.
+Your existing `package.json` scripts, turbo, pnpm, Makefile targets — untouched.
+
+## Coexisting with direnv
+
+You already use direnv for per-directory env vars. mise and direnv overlap on that
+layer but don't conflict. The recommended setup if you use both:
+
+```zsh
+# ~/.zshrc — mise handles tools/PATH only, direnv handles env vars as today
+eval "$(mise activate zsh --no-env)"
+eval "$(direnv hook zsh)"
+```
+
+`--no-env` tells mise: activate tool shims and PATH management, but leave
+environment variables to direnv. Your existing `.envrc` files are completely
+untouched. This is the documented coexistence pattern.
+
+Alternatively: just never add `[env]` sections to `.mise.toml`. If the section
+isn't there, mise doesn't set env vars. No flag needed, no conflict possible.
+
+## Coexisting with turbo / pnpm task runners
+
+`mise run` only runs when you explicitly call it. Having a `[tasks]` section in
+`.mise.toml` doesn't interfere with `pnpm run`, `turbo`, or any other task runner.
+They operate completely independently.
+
+In practice: if you already have turbo/pnpm for task running in your projects,
+there's no reason to add `[tasks]` to `.mise.toml`. Just leave that section out.
+
+
 ## If you want to try it
 
 1. `brew install mise`

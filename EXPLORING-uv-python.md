@@ -62,12 +62,72 @@ pyenv is still useful if you need:
 uv's approach is different: virtualenvs live in the project directory (`.venv`)
 rather than a central `~/.pyenv/versions/` store. More modern, less global state.
 
+## The activation problem — and how to solve it
+
+A common complaint with local virtualenvs: you forget to `source .venv/bin/activate`
+and accidentally install packages into global Python instead.
+
+pyenv avoids this entirely — `.python-version` in the project directory auto-activates
+the named virtualenv when you `cd` in. No manual step.
+
+uv has two answers:
+
+**Option A — uv commands are activation-aware (partial fix)**
+
+`uv run`, `uv pip install`, and `uv sync` automatically find and use `.venv` in
+the current directory without you activating it. So `uv pip install requests`
+installs into `.venv`, not global Python, even without `source activate`.
+
+The gap: bare `pip install` or `python` still hit global Python. If your muscle
+memory is `pip install`, this doesn't fully protect you.
+
+**Option B — direnv + uv (full fix, matches pyenv ergonomics)**
+
+You already have `direnv` installed and in your oh-my-zsh plugins. Add a `.envrc`
+to any project and direnv auto-activates `.venv` on `cd`, deactivates on `cd` out.
+Same behaviour as your nvm `.nvmrc` hook — you never think about it.
+
+One-time setup in `~/.config/direnv/direnvrc`:
+
+```sh
+layout_uv() {
+  if [[ -d .venv ]]; then
+    VIRTUAL_ENV="$(pwd)/.venv"
+  else
+    uv venv --python ${PYTHON_VERSION:-3.12}
+    VIRTUAL_ENV="$(pwd)/.venv"
+  fi
+  export VIRTUAL_ENV
+  PATH_add "$VIRTUAL_ENV/bin"
+}
+```
+
+Then per project:
+
+```sh
+echo "layout uv" > .envrc
+direnv allow
+```
+
+From that point, entering the directory activates the env automatically. Leaving
+deactivates it. Works with bare `pip` and `python` too since the env is on PATH.
+
+**Honest comparison:**
+
+If auto-activation without per-project config files matters to you, pyenv +
+`.python-version` already solves it and you're already using it. That's a real
+advantage of the pyenv model — less per-project ceremony.
+
+The direnv + uv combo matches pyenv ergonomics but requires a `.envrc` in each
+project (one-time, committable). Whether that tradeoff is worth it depends on
+how much the speed and ecosystem direction of uv matters to you.
+
 ## Migration path (if you want to try it)
 
 You don't have to migrate all at once. Incremental:
 
-**Step 1 — new projects:** Use `uv venv` instead of `pyenv virtualenv` for any
-new project. Keep pyenv for existing named virtualenvs.
+**Step 1 — new projects:** Use `uv venv` + direnv instead of `pyenv virtualenv`
+for any new project. Keep pyenv for existing named virtualenvs.
 
 **Step 2 — Python versions:** Stop using `pyenv install`. Use `uv python install`
 instead. They coexist fine.
@@ -79,7 +139,8 @@ remove the pyenv block from `~/.zshrc`. Saves ~100ms of shell startup time.
 recreate it as a `.venv` in the project directory:
 ```sh
 cd myproject
-uv venv --python 3.12
+echo "layout uv" > .envrc
+direnv allow
 uv pip install -r requirements.txt   # or: uv sync
 ```
 
