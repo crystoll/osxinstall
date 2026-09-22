@@ -96,6 +96,8 @@ Do these before handing back or wiping:
 
 Not implemented yet, in priority order:
 
+- **`uv` replacing pyenv** — `uv` is already installed and manages Python versions. See `EXPLORING-uv-python.md` for migration path.
+- **`mise` replacing nvm + pyenv** — single polyglot runtime manager. See `EXPLORING-mise.md` for evaluation guide.
 - **Brewfile** — replace hand-rolled `brew_install`/`brew_cask` helpers with `brew bundle`. Run `brew bundle dump > Brewfile` on current machine to capture exact state. `brew bundle check` for drift detection.
 - **Colima config** — commit a `colima.yaml` to the repo so `colima start` picks up preferred CPU/memory/disk automatically
 - **nvm version** — `v0.40.1` is hardcoded; could resolve latest at install time
