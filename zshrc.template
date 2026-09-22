@@ -1,0 +1,118 @@
+# ~/.zshrc
+# Public-safe shell config template.
+# Private tokens and secrets live in ~/.zshrc.private (see PRIVATE.md — not in repo).
+
+# ── oh-my-zsh ─────────────────────────────────────────────────────────────────
+
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+plugins=(git direnv)
+source $ZSH/oh-my-zsh.sh
+
+# ── path ──────────────────────────────────────────────────────────────────────
+
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="./node_modules/.bin:$PATH"   # prefer local node bins
+
+# ── homebrew ──────────────────────────────────────────────────────────────────
+
+alias brewski='brew update && brew upgrade && brew cleanup; brew doctor'
+
+# ── node (nvm) ────────────────────────────────────────────────────────────────
+
+export NVM_DIR="$HOME/.nvm"
+[[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"
+[[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
+
+# auto-switch node version when entering a directory with .nvmrc
+autoload -U add-zsh-hook
+load-nvmrc() {
+  local nvmrc_path
+  nvmrc_path="$(nvm_find_nvmrc)"
+  if [[ -n "$nvmrc_path" ]]; then
+    local nvmrc_node_version
+    nvmrc_node_version=$(nvm version "$(cat "$nvmrc_path")")
+    if [[ "$nvmrc_node_version" = "N/A" ]]; then
+      nvm install
+    elif [[ "$nvmrc_node_version" != "$(nvm version)" ]]; then
+      nvm use
+    fi
+  elif [[ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ]] && [[ "$(nvm version)" != "$(nvm version default)" ]]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:":*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+[[ -s "$HOME/.bun/_bun" ]] && . "$HOME/.bun/_bun"
+
+# ── python (pyenv) ────────────────────────────────────────────────────────────
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/shims:$PATH"
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
+# ── rust ──────────────────────────────────────────────────────────────────────
+
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# ── containers ────────────────────────────────────────────────────────────────
+
+export DOCKER_CONTEXT=colima
+
+# ── terraform (tenv) ──────────────────────────────────────────────────────────
+
+export TENV_AUTO_INSTALL=true
+
+# ── pager — no pager for git/aws/less ────────────────────────────────────────
+
+export PAGER=cat
+export GIT_PAGER=cat
+export LESS='-FRX'
+
+# ── vscode shell integration ──────────────────────────────────────────────────
+
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
+
+# ── zsh tweaks ────────────────────────────────────────────────────────────────
+
+setopt NO_NOMATCH   # don't error on unmatched globs (e.g. git push origin HEAD:refs/for/*)
+
+# fzf shell integration (key bindings + completion) — requires fzf to be installed
+[[ -f "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh" ]] && . "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
+[[ -f "$(brew --prefix)/opt/fzf/shell/completion.zsh" ]]   && . "$(brew --prefix)/opt/fzf/shell/completion.zsh"
+
+# ── ollama (local LLM) ────────────────────────────────────────────────────────
+
+export OLLAMA_FLASH_ATTENTION=1
+export OLLAMA_KV_CACHE_TYPE=q4_0
+export OLLAMA_CONTEXT_LENGTH=65536
+
+# ── java (sdkman) — uncomment if using Java ───────────────────────────────────
+
+# export SDKMAN_DIR="$HOME/.sdkman"
+# [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# ── android — uncomment if doing Android dev ─────────────────────────────────
+
+# export ANDROID_HOME=$HOME/Library/Android/sdk
+# export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin
+
+# ── private config (tokens, credentials, project-specific) ───────────────────
+# Keep this last so private config can override anything above.
+
+[[ -f "$HOME/.zshrc.private" ]] && . "$HOME/.zshrc.private"
